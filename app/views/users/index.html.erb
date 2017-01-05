@@ -1,0 +1,29 @@
+<% provide :title, "All Users" %>
+<center>
+  <h1>All Users</h1>
+  <div>
+      <%= search_form_for @q, url: search_users_path, html: {method: :post} do |f|%>
+        <div class="field">
+          <%= f.label :name_cont, "Name" %>
+          <%= f.search_field :name_cont %>
+        </div>
+      <div class="action">
+      <%= f.submit "search" %>
+      </div>
+      <% end %>
+
+  <% @users.each do |user| %>
+    <table>
+      <tr>
+        <td><%= link_to user.name, user %> </td>
+        <% if can? :destroy, user %>
+        <td>| <%= link_to "Delete", user_path(user), method: :delete,
+          data: {confirm: "Do you want to Delete"} %>
+        </td>
+      </tr>
+      <% end %>
+      <br/>
+    </table>
+  <% end %>
+  </div>
+</center>
